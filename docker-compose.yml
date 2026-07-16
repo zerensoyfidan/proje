@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: staj-projesi-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: staj_duygu_analizi
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_PASSWORD: rootpassword
+    ports:
+      - "3307:3306"
