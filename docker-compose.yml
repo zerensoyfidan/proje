@@ -3,11 +3,34 @@ version: '3.8'
 services:
   db:
     image: mysql:8.0
-    container_name: staj-projesi-db
-    restart: always
-    environment:
-      MYSQL_DATABASE: staj_duygu_analizi
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_PASSWORD: rootpassword
+    container_name: mysql-db
     ports:
-      - "3307:3306"
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: staj_duygu_analizi
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build: ./backend
+    container_name: spring-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/staj_duygu_analizi?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+
+  frontend:
+    build: ./frontend
+    container_name: react-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
