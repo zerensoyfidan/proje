@@ -19,16 +19,16 @@ public class Analysis{
     private Long id;
     private String clientName;    
     private String inputText;      
-    private String sentimentResult; 
+    private String result; 
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public Analysis() {}
 
 
-    public Analysis(String clientName, String inputText, String sentimentResult) {
+    public Analysis(String clientName, String inputText, String result) {
         this.clientName = clientName;
         this.inputText = inputText;
-        this.sentimentResult = sentimentResult;
+        this.result = result;
     }
 
     
@@ -41,8 +41,8 @@ public class Analysis{
     public String getInputText() { return inputText; }
     public void setInputText(String inputText) { this.inputText = inputText; }
 
-    public String getSentimentResult() { return sentimentResult; }
-    public void setSentimentResult(String sentimentResult) { this.sentimentResult = sentimentResult; }
+    public String getResult() { return result; }
+    public void setResult(String result) { this.result = result; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }

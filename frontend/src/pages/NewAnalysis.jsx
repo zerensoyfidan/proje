@@ -99,25 +99,6 @@ function NewAnalysis() {
           </Button>
         </Box>
       </Container>
-
-  
-      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000 }} elevation={3}>
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-            if (newValue === 0) navigate('/analyses');
-            if (newValue === 1) navigate('/new-analyses');
-            if (newValue === 2) navigate('/voice-record');
-          }}
-          sx={{ '& .Mui-selected': { color: '#1a237e' }, '& .Mui-selected .MuiSvgIcon-root': { color: '#1a237e' } }}
-        >
-          <BottomNavigationAction label="Geçmiş Analizler" icon={<HistoryIcon />} />
-          <BottomNavigationAction label="Yeni Sohbet" icon={<ChatIcon />} />
-          <BottomNavigationAction label="Ses Kaydı" icon={<MicIcon />} />
-        </BottomNavigation>
-      </Paper>
     </Box>
   );
 

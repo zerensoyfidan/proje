@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import {Container,Box,Typography, Button, List, ListItem, ListItemText, Paper, IconButton, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import MicIcon from '@mui/icons-material/Mic';
@@ -8,10 +8,16 @@ import ChatIcon from '@mui/icons-material/Chat';
 import { useNavigate } from 'react-router-dom';
 
 function VoiceMessages() {
-  const navigate = useNavigate();
-  const [value, setValue] = useState(2); 
-  const [userRole, setUserRole] = useState('PSYCHOLOGIST'); 
+  const navigate = useNavigate(); 
+  const [userRole, setUserRole] = useState(''); 
   const [isRecording, setIsRecording] = useState(false); 
+
+  useEffect(() => {
+    const savedRole = localStorage.getItem('userRole');
+    if (savedRole) {
+      setUserRole(savedRole);
+    }
+  }, []);
 
   const [voiceNotes, setVoiceNotes] = useState([
     { id: 1, date: '01.01.2026', title: 'Ses kaydı', duration: '00:00' },
@@ -29,14 +35,9 @@ function VoiceMessages() {
   return (
     <Container maxWidth="md" sx={{ mt: 5, mb: 10 }}>
       <Typography component="h1" variant="h4" sx={{ mb: 2, fontWeight: 'bold', color: '#1a237e', textAlign: 'center' }}>
-        Ses Kayıtları Merkezi
+        Ses Kayıtları 
       </Typography>
-      <Typography variant="body1" sx={{ mb: 4, color: 'text.secondary', textAlign: 'center' }}>
-        {userRole === 'PSYCHOLOGIST' 
-          ? 'Danışanlarınızla paylaştığınız ses kayıtlarını yönetin ve yeni ses kaydı alın.' 
-          : 'Psikoloğunuzun sizin için bıraktığı sesli notları buradan dinleyebilirsiniz.'}
-      </Typography>
-
+      
       <Paper elevation={2} sx={{ padding: 3, borderRadius: 2, backgroundColor: '#f8f9fa' }}>
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold', color: '#333' }}>
           Kayıtlı Ses Notları
@@ -67,7 +68,7 @@ function VoiceMessages() {
         </List>
       </Paper>
 
-      {userRole === 'PSYCHOLOGIST' && (
+      {userRole === 'PSIKOLOG' && (
         <Box sx={{ mt: 4 }}>
           <Paper 
             elevation={3} 
@@ -108,25 +109,6 @@ function VoiceMessages() {
           </Paper>
         </Box>
       )}
-
-    
-      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000 }} elevation={3}>
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-            if (newValue === 0) navigate('/analyses');
-            if (newValue === 1) navigate('/new-analyses');
-            if (newValue === 2) navigate('/voice-record');
-          }}
-          sx={{ '& .Mui-selected': { color: '#1a237e' }, '& .Mui-selected .MuiSvgIcon-root': { color: '#1a237e' }}}
-        >
-          <BottomNavigationAction label="Geçmiş Analizler" icon={<HistoryIcon />} />
-          <BottomNavigationAction label="Yeni Sohbet" icon={<ChatIcon />} />
-          <BottomNavigationAction label="Ses Kaydı" icon={<MicIcon />} />
-        </BottomNavigation>
-      </Paper>
 
     </Container>
   );

@@ -1,23 +1,47 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Box, Typography, TextField, Button, Alert } from '@mui/material';
+import axios from 'axios';
 
 
 function Login(){
-    const [username, setUsername]=useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword]=useState('');
-    const [error, setError] = useState(false);
+    const [error, setError] = useState('');
     const navigate=useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
        e.preventDefault();
-       
-       if (username === 'danışan' && password === '1234') {
+       setError('');
+
+       try{
+         
+        const response = await axios.post('http://localhost:8080/api/auth/login', {email: email, password: password});
+
+        if(response.data?.role){
+            localStorage.setItem('userRole', response.data.role);
+        }
+        if(response.data?.email){
+            localStorage.setItem('userEmail', response.data.email);
+        }
+
         navigate('/analyses');
-    } else {
-        setError(true);
     }
-}
+       catch(err){
+ 
+        console.log('Login Hatası: ', err.response?.data);
+        const errorData=err.response?.data;
+
+        if(typeof errorData==='string'){
+            setError(errorData);
+        }else if(errorData && typeof errorData ==='object'){
+            const msg = errorData.errors?.[0].defaultMessage || errorData.message || 'E-posta veya şifre hatalı';
+            setError(msg);
+        }else{
+            setError('E-posta veya şifre hatalı');
+        }
+       }
+    }
 
 
     return (
@@ -40,21 +64,22 @@ function Login(){
 
           {error && (
               <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
-                  Kullanıcı adı veya şifre hatalı
+                 {error}
               </Alert>
           )}
 
-          <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
-              <TextField
-                  margin="normal"
+            <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
+               <TextField
+                   margin="normal"
                   required
                   fullWidth
-                  label="Kullanıcı Adı"
-                  value={username}
-                  onChange={(e) => {
-                      setError(false);
-                      setUsername(e.target.value);
-                  }}
+                   type="email"
+                   label="E-posta Adresi"
+                   value={email}
+                   onChange={(e) => {
+                   setError(false);
+                   setEmail(e.target.value);
+                      }}
               />
               
               <TextField
