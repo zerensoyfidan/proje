@@ -10,8 +10,8 @@ function Analysis() {
   const [value, setValue] = useState(0);
 
   const fakeAnalyses = [
-    { id: 1, date: '18.07.2026', title: 'Analiz', summary: 'içerik' },
-    { id: 2, date: '15.07.2026', title: 'Analiz2', summary: 'içerik' },
+    { id: 1, date: '18.07.2026', title: 'Özet', summary: 'içerik' },
+    { id: 2, date: '15.07.2026', title: 'Özet2', summary: 'içerik' },
   ];
 
   return (
@@ -27,8 +27,8 @@ function Analysis() {
       <Box component="main" sx={{ p: 3 }}>
   <Container maxWidth="sm"> 
     
-    <Typography variant="h5" sx={{ mb: 3, fontWeight: 'bold', color: '#333', textAlign: 'center' }}>
-      Geçmiş Analizleriniz
+    <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold', color: '#1a237e', textAlign: 'center' }}>
+      Geçmiş Özetler
     </Typography>
 
     {fakeAnalyses.map((analysis) => (
@@ -48,26 +48,7 @@ function Analysis() {
     ))}
 
   </Container>
-</Box>
-
-      
-      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000 }} elevation={3}>
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-            if (newValue === 0) navigate('/analyses');
-            if (newValue === 1) navigate('/new-analyses');
-            if (newValue === 2) navigate('/voice-record');
-          }}
-          sx={{ '& .Mui-selected': { color: '#1a237e' }, '& .Mui-selected .MuiSvgIcon-root': { color: '#1a237e' }}}
-        >
-          <BottomNavigationAction label="Geçmiş Analizler" icon={<HistoryIcon />} />
-          <BottomNavigationAction label="Yeni Sohbet" icon={<ChatIcon />} />
-          <BottomNavigationAction label="Ses Kaydı" icon={<MicIcon />} />
-        </BottomNavigation>
-      </Paper>
+</Box>          
     </Box>
   );
 }

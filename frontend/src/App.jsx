@@ -6,6 +6,7 @@ import Analysis from './pages/Analysis';
 import NewAnalysis from './pages/NewAnalysis';
 import StartingPage from './pages/StartingPage';
 import VoiceMessages from './pages/VoiceMessages';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/new-analyses" element={<NewAnalysis></NewAnalysis>}></Route>
         <Route path="/voice-record" element={<VoiceMessages></VoiceMessages>}></Route>
       </Routes>
+      <Navbar></Navbar>
     </Router>
   )
 }
